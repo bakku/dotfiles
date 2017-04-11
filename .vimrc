@@ -3,6 +3,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-rails'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 
@@ -12,9 +14,6 @@ set background=dark  " Setting dark mode
 set nu " set line numbering
 
 set autoindent 		" enable indention
-set expandtab 		" use spaces instead of tabs
-set tabstop=2 		" use two spaces
-set shiftwidth=2 	" use two spaces as indention
 
 " syntastic stuff
 set statusline+=%#warningmsg#
@@ -25,11 +24,20 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+let g:syntastic_scala_checkers=['']  " don't use syntastic for scala
 " end syntastic stuff
 
 set swapfile          " enable swapfile
 set dir=~/.vim/tmp    " move swapfile to vim folder
 
 autocmd VimEnter * NERDTree     " automatically open NERDTree on startup
+
+autocmd Filetype php setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype ruby setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype html setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype eruby setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype yaml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 set backspace=indent,eol,start  " fix backspace issues with vim 

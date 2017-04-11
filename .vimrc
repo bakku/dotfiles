@@ -5,7 +5,9 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-rails'
 Plug 'leafgarland/typescript-vim'
-
+Plug 'wincent/command-t', {
+  \  'do': 'cd ruby/command-t && ruby extconf.rb && make'
+  \ }
 call plug#end()
 
 colorscheme gruvbox
@@ -27,6 +29,8 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_scala_checkers=['']  " don't use syntastic for scala
 " end syntastic stuff
+
+:let mapleader = ","
 
 set swapfile          " enable swapfile
 set dir=~/.vim/tmp    " move swapfile to vim folder

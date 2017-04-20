@@ -1,5 +1,11 @@
 call plug#begin('~/.vim/plugged')
 
+Plug 'kchmck/vim-coffee-script'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'alvan/vim-closetag'
+Plug 'tomtom/tlib_vim'
+Plug 'garbas/vim-snipmate'
+Plug 'honza/vim-snippets'
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
@@ -10,8 +16,8 @@ Plug 'wincent/command-t', {
   \ }
 call plug#end()
 
+set background=dark " Setting dark mode
 colorscheme gruvbox
-set background=dark  " Setting dark mode
 
 set nu " set line numbering
 
@@ -30,7 +36,9 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_scala_checkers=['']  " don't use syntastic for scala
 " end syntastic stuff
 
-:let mapleader = ","
+let mapleader = ","
+
+runtime macros/matchit.vim
 
 set swapfile          " enable swapfile
 set dir=~/.vim/tmp    " move swapfile to vim folder

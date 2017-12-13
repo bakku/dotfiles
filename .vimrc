@@ -1,6 +1,6 @@
 call plug#begin('~/.vim/plugged')
-
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'rust-lang/rust.vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'alvan/vim-closetag'
@@ -66,5 +66,6 @@ autocmd Filetype yaml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype sql setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype coffee setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype less setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype cpp setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
-set backspace=indent,eol,start  " fix backspace issues with vim 
+set backspace=indent,eol,start  " fix backspace issues with vim

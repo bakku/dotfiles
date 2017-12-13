@@ -1,5 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
+Plug 'ntpeters/vim-better-whitespace'
 Plug 'kchmck/vim-coffee-script'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'alvan/vim-closetag'
@@ -41,12 +42,20 @@ let g:syntastic_eruby_ruby_quiet_messages =
 
 let mapleader = ","
 
+" BEGIN nerdtree tabs
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
+let g:nerdtree_tabs_open_on_console_startup=1 	" open NERDTree when starting vim
+let g:nerdtree_tabs_autoclose=0 		" dont close window if only NERDTree is open
+" END nerdtree tabs
+
 runtime macros/matchit.vim
+
+autocmd VimEnter * NERDTree     " automatically open NERDTree on startup
 
 set swapfile          " enable swapfile
 set dir=~/.vim/tmp    " move swapfile to vim folder
 
-autocmd VimEnter * NERDTree     " automatically open NERDTree on startup
+setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 autocmd Filetype php setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype javascript setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
@@ -54,5 +63,8 @@ autocmd Filetype ruby setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype html setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype eruby setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype yaml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype sql setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype coffee setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype less setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 set backspace=indent,eol,start  " fix backspace issues with vim 

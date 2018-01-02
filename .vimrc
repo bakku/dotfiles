@@ -35,6 +35,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_scala_checkers=['']  " don't use syntastic for scala
+let g:syntastic_html_checkers=['']   " don't use syntastic for html
 
 let g:syntastic_eruby_ruby_quiet_messages =
     \ {'regex': 'possibly useless use of a variable in void context'}

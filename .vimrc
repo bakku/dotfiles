@@ -1,9 +1,7 @@
 call plug#begin('~/.vim/plugged')
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'rust-lang/rust.vim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'alvan/vim-closetag'
 Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
 Plug 'honza/vim-snippets'
@@ -11,7 +9,7 @@ Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-rails'
-Plug 'leafgarland/typescript-vim'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'wincent/command-t', {
   \  'do': 'cd ruby/command-t && ruby extconf.rb && make'
   \ }
@@ -68,5 +66,8 @@ autocmd Filetype sql setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype coffee setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype less setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype cpp setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype css setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype haskell setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
 set backspace=indent,eol,start  " fix backspace issues with vim

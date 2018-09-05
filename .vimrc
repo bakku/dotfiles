@@ -10,6 +10,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-rails'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'kylef/apiblueprint.vim'
 Plug 'wincent/command-t', {
   \  'do': 'cd ruby/command-t && ruby extconf.rb && make'
   \ }
@@ -69,5 +70,6 @@ autocmd Filetype cpp setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype css setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype haskell setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype apiblueprint setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
 set backspace=indent,eol,start  " fix backspace issues with vim

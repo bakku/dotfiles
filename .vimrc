@@ -33,6 +33,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+let g:syntastic_java_checkers=['']
 let g:syntastic_scala_checkers=['']  " don't use syntastic for scala
 let g:syntastic_html_checkers=['']   " don't use syntastic for html
 
@@ -71,5 +72,6 @@ autocmd Filetype c setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype css setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype haskell setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype apiblueprint setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd Filetype java setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
 set backspace=indent,eol,start  " fix backspace issues with vim

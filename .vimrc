@@ -10,6 +10,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-rails'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'fatih/vim-go'
 Plug 'kylef/apiblueprint.vim'
 Plug 'wincent/command-t', {
   \  'do': 'cd ruby/command-t && ruby extconf.rb && make'
@@ -41,7 +42,9 @@ let g:syntastic_eruby_ruby_quiet_messages =
     \ {'regex': 'possibly useless use of a variable in void context'}
 " end syntastic stuff
 
-let mapleader = ","
+let mapleader = "," " , for super key
+
+let g:go_fmt_command = "goimports" " run goimports instead of gofmt
 
 " BEGIN nerdtree tabs
 map <Leader>n <plug>NERDTreeTabsToggle<CR>

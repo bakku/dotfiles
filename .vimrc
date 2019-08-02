@@ -1,5 +1,4 @@
 call plug#begin('~/.vim/plugged')
-Plug 'ntpeters/vim-better-whitespace'
 Plug 'kchmck/vim-coffee-script'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -12,9 +11,11 @@ Plug 'tpope/vim-rails'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'fatih/vim-go'
 Plug 'kylef/apiblueprint.vim'
-Plug 'wincent/command-t', {
-  \  'do': 'cd ruby/command-t && ruby extconf.rb && make'
-  \ }
+Plug 'luochen1990/rainbow'
+Plug 'tpope/vim-fireplace'
+Plug 'wincent/command-t'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'bhurlow/vim-parinfer'
 call plug#end()
 
 set background=dark " Setting dark mode
@@ -23,6 +24,15 @@ colorscheme gruvbox
 set nu " set line numbering
 
 set autoindent 		" enable indention
+
+" enable strip whitespace on save
+let g:strip_whitespace_on_save = 1
+
+" enable rainbow parentheses for clojure
+autocmd FileType clojure RainbowToggle
+
+" map ,r to reloading all code and executing the current test file in clojure
+nmap ,r :Require! <bar> Eval (clojure.test/run-tests)<CR>
 
 " syntastic stuff
 set statusline+=%#warningmsg#
@@ -37,6 +47,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_java_checkers=['']
 let g:syntastic_scala_checkers=['']  " don't use syntastic for scala
 let g:syntastic_html_checkers=['']   " don't use syntastic for html
+let g:syntastic_scss_checkers=['']   " don't use syntastic for sass
 let g:syntastic_javascript_checkers = ['eslint'] " use eslint for javascript
 let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
 
@@ -81,5 +92,8 @@ autocmd Filetype css setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype haskell setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype apiblueprint setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd Filetype java setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+
+autocmd BufNewFile,BufRead *.tpl set filetype=html
+autocmd Filetype tpl setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 set backspace=indent,eol,start  " fix backspace issues with vim

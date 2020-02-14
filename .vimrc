@@ -1,4 +1,5 @@
 call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-fugitive'
 Plug 'kchmck/vim-coffee-script'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -16,9 +17,12 @@ Plug 'tpope/vim-fireplace'
 Plug 'wincent/command-t'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'bhurlow/vim-parinfer'
+Plug 'vim-airline/vim-airline'
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
-set background=dark " Setting dark mode
+" theme settings
+set background=dark
 colorscheme gruvbox
 
 set nu " set line numbering
@@ -27,6 +31,9 @@ set autoindent 		" enable indention
 
 " enable strip whitespace on save
 let g:strip_whitespace_on_save = 1
+
+" use ESC also in terminal mode
+tnoremap <Esc> <C-\><C-n>
 
 " enable rainbow parentheses for clojure
 autocmd FileType clojure RainbowToggle

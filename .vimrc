@@ -19,15 +19,25 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'bhurlow/vim-parinfer'
 Plug 'vim-airline/vim-airline'
 Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'vim-ruby/vim-ruby'
 call plug#end()
+
+" don't be compatible with vi
+set nocompatible
+
+" show command that is being entered
+set showcmd
 
 " theme settings
 set background=dark
 colorscheme gruvbox
 
-set nu " set line numbering
+" set line numbering
+set nu
 
-set autoindent 		" enable indention
+" enable indention
+set autoindent
 
 " enable strip whitespace on save
 let g:strip_whitespace_on_save = 1
@@ -64,20 +74,25 @@ let g:syntastic_eruby_ruby_quiet_messages =
 
 let mapleader = "," " , for super key
 
+" find all files recursively for file commands
+set path=**
 " ignore node_modules directory
 set wildignore+=node_modules
 
 let g:go_fmt_command = "goimports" " run goimports instead of gofmt
 
-" BEGIN nerdtree tabs
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
+" NERDTree config
+map <Leader>n :NERDTreeToggle<CR>
 let g:nerdtree_tabs_open_on_console_startup=1 	" open NERDTree when starting vim
 let g:nerdtree_tabs_autoclose=0 		" dont close window if only NERDTree is open
-" END nerdtree tabs
+autocmd VimEnter * NERDTree     " automatically open NERDTree on startup
+
+" show non breaking spaces
+set list
+set listchars=tab:\ \ ,nbsp:¬
 
 runtime macros/matchit.vim
 
-autocmd VimEnter * NERDTree     " automatically open NERDTree on startup
 
 set swapfile          " enable swapfile
 set dir=~/.vim/tmp    " move swapfile to vim folder

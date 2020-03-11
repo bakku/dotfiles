@@ -1,0 +1,11 @@
+{
+    "editor.fontSize": 16,
+    "editor.fontFamily": "Monaco, 'Courier New', monospace",
+    "go.formatTool": "goimports",
+    "go.useLanguageServer": true,
+    "workbench.editor.enablePreview": false,
+    "workbench.colorTheme": "Gruvbox Dark (Soft)",
+    "editor.minimap.enabled": false,
+    "files.trimTrailingWhitespace": true,
+    "window.zoomLevel": 0
+}

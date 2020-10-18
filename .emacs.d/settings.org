@@ -3,26 +3,37 @@
 * Package configuration
 
 ** Evil
-   
+
+Evil collection wants this configuration to work properly
+
+#+BEGIN_SRC emacs-lisp
+(setq evil-want-keybinding nil)
+#+END_SRC
+
 Enable evil mode
 
 #+BEGIN_SRC emacs-lisp
 (evil-mode 1)
 #+END_SRC
 
+Evil mode in more places
+
+#+BEGIN_SRC emacs-lisp
+(evil-collection-init)
+#+END_SRC
+
 ** Ivy/Counsel
-   
+
 Enable ivy/counsel
 
 #+BEGIN_SRC emacs-lisp
 (ivy-mode 1)
 #+END_SRC
 
-Override standard emacs commands using the ones counsel offers
+Override M-x using the one counsel offers
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
 #+END_SRC
 
 ** Org mode
@@ -94,13 +105,13 @@ Order M-x commands according to their latest usage
 #+END_SRC
 
 ** Key chord
-   
+
 To create some key combinations
 
 #+BEGIN_SRC emacs-lisp
 (key-chord-mode 1)
 #+END_SRC
-   
+
 ** Projectile
 
 Enable projectile
@@ -109,20 +120,14 @@ Enable projectile
 (projectile-mode +1)
 #+END_SRC
 
-Use C-c p for projectile commands
-
-#+BEGIN_SRC emacs-lisp
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-#+END_SRC
-
 Use ivy for projectile completion
 
 #+BEGIN_SRC emacs-lisp
 (setq projectile-completion-system 'ivy)
 #+END_SRC
-   
+
 ** Clojure mode
-   
+
 Enable parinfer
 
 #+BEGIN_SRC emacs-lisp
@@ -134,7 +139,7 @@ Enable cider
 #+BEGIN_SRC emacs-lisp
 (add-hook 'clojure-mode-hook #'cider-mode)
 #+END_SRC
-   
+
 ** Flycheck
 
 Enable flycheck
@@ -173,7 +178,7 @@ Enable doom modeline
 #+END_SRC
 
 * Emacs visual appearance
-  
+
 ** General
 
 Set window title to 'Emacs'
@@ -185,7 +190,7 @@ Set window title to 'Emacs'
 Dark title bar makes emacs look much more beautiful
 
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'default-frame-alist '(ns-appearance . dark)) 
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
 #+END_SRC
 
 Do not ring the bell at all
@@ -227,7 +232,10 @@ Use Monaco for MacOS
 (cond
  ((string-equal system-type "darwin")
   (when (member "Monaco" (font-family-list))
-    (set-frame-font "Monaco-16" t t))))
+    (set-frame-font "Monaco-16" t t)))
+ ((string-equal system-type "windows-nt")
+  (when (member "Cascadia Code" (font-family-list))
+    (set-frame-font "Cascadia Code-14" t t))))
 #+END_SRC
 
 Highlight matching parenthesis
@@ -281,9 +289,16 @@ Start with maximized frame
 #+BEGIN_SRC emacs-lisp
 (toggle-frame-maximized)
 #+END_SRC
-  
+
+Do not use --dired option for ls when using macOS
+
+#+BEGIN_SRC emacs-lisp
+(when (string-equal system-type "darwin")
+  (setq dired-use-ls-dired nil))
+#+END_SRC
+
 * Custom commands
-  
+
 Quickly switch to previous buffer
 
 #+BEGIN_SRC emacs-lisp
@@ -293,7 +308,7 @@ Quickly switch to previous buffer
   (switch-to-buffer (other-buffer (current-buffer) 1)))
 #+END_SRC
 
-Open frequently used directories in dired
+Open frequently used directories/files in dired
 
 #+BEGIN_SRC emacs-lisp
 (defun open-org-directory ()
@@ -305,6 +320,11 @@ Open frequently used directories in dired
   "Open emacs home in dired"
   (interactive)
   (dired user-emacs-directory))
+
+(defun open-emacs-settings ()
+  "Open settings.org"
+  (interactive)
+  (find-file (concat user-emacs-directory "settings.org")))
 #+END_SRC
 
 Quickly switch between light and dark themes
@@ -333,6 +353,12 @@ Insert a source code block in org mode
     (previous-line 2)))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(defun switch-to-scratch-buffer ()
+  (interactive)
+  (switch-to-buffer "*scratch*"))
+#+END_SRC
+
 * Keybindings
 
 Map meta to cmd on MacOS
@@ -348,19 +374,54 @@ Map meta to cmd on MacOS
 Use jk instead of ESC in evil mode
 
 #+BEGIN_SRC emacs-lisp
-(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "jk" #'evil-normal-state)
 #+END_SRC
 
-C-c b for quickly switching to the previous buffer
+Define all global keybindings that start with SPC
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-c b") #'switch-to-previous-buffer)
+(general-define-key
+ :states '(normal visual emacs motion)
+ :keymaps 'override
+ :prefix "SPC"
+ "" nil
+ "." '(counsel-find-file :which-key "Find file")
+ "," '(switch-to-previous-buffer :which-key "Switch to previous buffer")
+ "<" '(ivy-switch-buffer :which-key "Show all buffers")
+ "x" '(switch-to-scratch-buffer :which-key "Switch to *scratch* buffer")
+ "d" '(dired :which-key "Open dired")
+ "g" '(magit :which-key "Open magit")
+ "p" '(:keymap projectile-command-map :which-key "Projectile commands")
+ "p a" '(projectile-add-known-project :which-key "Add new project")
+ "b" '(:ignore t :which-key "Buffers")
+ "b k" '(kill-current-buffer :which-key "Kill buffer")
+ "b r" '(revert-buffer :which-key "Revert buffer")
+ "w" '(:ignore t :which-key "Window management")
+ "w v" '(split-window-right :which-key "Split window vertically")
+ "w h" '(split-window-below :which-key "Split window horizontally")
+ "c" '(:ignore t :which-key "Emacs config")
+ "c h" '(open-emacs-home :which-key "Open emacs.d folder")
+ "c s" '(open-emacs-settings :which-key "Open emacs settings.org")
+ "q" '(save-buffers-kill-terminal :which-key "Quit Emacs"))
 #+END_SRC
 
 Insert code in org mode
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook
-          '(lambda ()
-       (local-set-key (kbd "C-c i c") #'org-insert-src-block)))
+(general-define-key
+ :prefix "SPC"
+ :states 'normal
+ :keymaps 'org-mode-map
+ "i" '(:ignore t :which-key "Insert")
+ "i c" '(org-insert-src-block :which-key "Insert SRC block"))
 #+END_SRC
+
+Moving around in ivy
+
+#+BEGIN_SRC emacs-lisp
+(general-define-key
+ :keymaps 'ivy-minibuffer-map
+ "C-j" #'ivy-next-line
+ "C-k" #'ivy-previous-line)
+#+END_SRC
+

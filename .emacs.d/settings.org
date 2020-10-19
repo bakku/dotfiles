@@ -398,7 +398,11 @@ Define all global keybindings that start with SPC
  "b r" '(revert-buffer :which-key "Revert buffer")
  "w" '(:ignore t :which-key "Window management")
  "w v" '(split-window-right :which-key "Split window vertically")
- "w h" '(split-window-below :which-key "Split window horizontally")
+ "w s" '(split-window-below :which-key "Split window horizontally")
+ "w h" '(evil-window-left :which-key "Move to left window")
+ "w j" '(evil-window-down :which-key "Move to lower window")
+ "w k" '(evil-window-up :which-key "Move to upper window")
+ "w l" '(evil-window-right :which-key "Move to right window")
  "c" '(:ignore t :which-key "Emacs config")
  "c h" '(open-emacs-home :which-key "Open emacs.d folder")
  "c s" '(open-emacs-settings :which-key "Open emacs settings.org")
@@ -421,6 +425,11 @@ Moving around in ivy
 #+BEGIN_SRC emacs-lisp
 (general-define-key
  :keymaps 'ivy-minibuffer-map
+ "C-j" #'ivy-next-line
+ "C-k" #'ivy-previous-line)
+
+(general-define-key
+ :keymaps 'ivy-switch-buffer-map
  "C-j" #'ivy-next-line
  "C-k" #'ivy-previous-line)
 #+END_SRC

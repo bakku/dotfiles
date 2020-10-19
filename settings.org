@@ -1,0 +1,436 @@
+#+TITLE: Emacs Configuration
+
+* Package configuration
+
+** Evil
+
+Evil collection wants this configuration to work properly
+
+#+BEGIN_SRC emacs-lisp
+(setq evil-want-keybinding nil)
+#+END_SRC
+
+Enable evil mode
+
+#+BEGIN_SRC emacs-lisp
+(evil-mode 1)
+#+END_SRC
+
+Evil mode in more places
+
+#+BEGIN_SRC emacs-lisp
+(evil-collection-init)
+#+END_SRC
+
+** Ivy/Counsel
+
+Enable ivy/counsel
+
+#+BEGIN_SRC emacs-lisp
+(ivy-mode 1)
+#+END_SRC
+
+Override M-x using the one counsel offers
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "M-x") 'counsel-M-x)
+#+END_SRC
+
+** Org mode
+
+Beautify bullets
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+END_SRC
+
+Do not show // or ** for italic and bold
+
+#+BEGIN_SRC emacs-lisp
+(setq org-hide-emphasis-markers t)
+#+END_SRC
+
+Always use org-indent-mode
+
+#+BEGIN_SRC emacs-lisp
+(setq org-startup-indented t)
+#+END_SRC
+
+
+Customize todo keyword sequences
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+        '((sequence "PLANNED" "OPEN" "IN PROGRESS" "IN REVIEW" "DONE")))
+#+END_SRC
+
+Log the time when a task is set to done
+
+#+BEGIN_SRC emacs-lisp
+(setq org-log-done 'time)
+#+END_SRC
+
+Set directories for org
+
+#+BEGIN_SRC emacs-lisp
+(setq org-directory "/Volumes/NO NAME/org")
+(setq org-agenda-files (list "/Volumes/NO NAME/org/todo.org"))
+#+END_SRC
+
+Customize colors of org mode
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keyword-faces
+        '(("PLANNED" . (:foreground "dark gray" :weight bold))
+        ("OPEN" . (:foreground "turquoise" :weight bold))
+        ("IN PROGRESS" . (:foreground "LightPink1" :weight bold))
+        ("IN REVIEW" . (:foreground "IndianRed1" :weight bold))
+        ("DONE" . (:foreground "DarkOliveGreen1" :weight bold))))
+#+END_SRC
+
+** Which key
+
+Get all possible combinations when pressing a prefix key
+
+#+BEGIN_SRC emacs-lisp
+(which-key-mode 1)
+#+END_SRC
+
+** Smex
+
+Order M-x commands according to their latest usage
+
+#+BEGIN_SRC emacs-lisp
+(smex-initialize)
+#+END_SRC
+
+** Key chord
+
+To create some key combinations
+
+#+BEGIN_SRC emacs-lisp
+(key-chord-mode 1)
+#+END_SRC
+
+** Projectile
+
+Enable projectile
+
+#+BEGIN_SRC emacs-lisp
+(projectile-mode +1)
+#+END_SRC
+
+Use ivy for projectile completion
+
+#+BEGIN_SRC emacs-lisp
+(setq projectile-completion-system 'ivy)
+#+END_SRC
+
+** Clojure mode
+
+Enable parinfer
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'clojure-mode-hook #'parinfer-mode)
+#+END_SRC
+
+Enable cider
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'clojure-mode-hook #'cider-mode)
+#+END_SRC
+
+** Flycheck
+
+Enable flycheck
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'after-init-hook #'global-flycheck-mode)
+#+END_SRC
+
+Display errors a little quicker
+
+#+BEGIN_SRC emacs-lisp
+(setq flycheck-display-errors-delay 0.25)
+#+END_SRC
+
+Enable clj-kondo and add homebrew location to path in case clj-kondo can't be found by flycheck
+
+#+BEGIN_SRC emacs-lisp
+(require 'flycheck-clj-kondo)
+#+END_SRC
+
+** Exec path from shell
+
+Enable exec path from shell on MacOS
+
+#+BEGIN_SRC emacs-lisp
+(when (string-equal system-type "darwin")
+  (add-hook 'after-init-hook #'exec-path-from-shell-initialize))
+#+END_SRC
+
+** Doom modeline
+
+Enable doom modeline
+
+#+BEGIN_SRC emacs-lisp
+(doom-modeline-mode 1)
+#+END_SRC
+
+* Emacs visual appearance
+
+** General
+
+Set window title to 'Emacs'
+
+#+BEGIN_SRC emacs-lisp
+(setq frame-title-format '("Emacs"))
+#+END_SRC
+
+Dark title bar makes emacs look much more beautiful
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+#+END_SRC
+
+Do not ring the bell at all
+
+#+BEGIN_SRC emacs-lisp
+(setq ring-bell-function 'ignore)
+#+END_SRC
+
+Don't show standard startup screen
+
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-screen t)
+#+END_SRC
+
+Hide the toolbar and scrollbar of emacs
+
+#+BEGIN_SRC emacs-lisp
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+#+END_SRC
+
+** Editor
+
+Show line numbers
+
+#+BEGIN_SRC emacs-lisp
+(global-display-line-numbers-mode 1)
+#+END_SRC
+
+Highlight current line
+
+#+BEGIN_SRC emacs-lisp
+(global-hl-line-mode 1)
+#+END_SRC
+
+Use Monaco for MacOS
+
+#+BEGIN_SRC emacs-lisp
+(cond
+ ((string-equal system-type "darwin")
+  (when (member "Monaco" (font-family-list))
+    (set-frame-font "Monaco-16" t t)))
+ ((string-equal system-type "windows-nt")
+  (when (member "Cascadia Code" (font-family-list))
+    (set-frame-font "Cascadia Code-14" t t))))
+#+END_SRC
+
+Highlight matching parenthesis
+
+#+BEGIN_SRC emacs-lisp
+(setq show-paren-style 'parenthesis)
+(show-paren-mode 1)
+#+END_SRC
+
+Cursor should not blink at all
+
+#+BEGIN_SRC emacs-lisp
+(blink-cursor-mode 0)
+#+END_SRC
+
+** Theme
+
+Use gruvbox dark as standard
+
+#+BEGIN_SRC emacs-lisp
+(load-theme 'gruvbox-dark-soft t)
+#+END_SRC
+
+Customize gruvbox theme
+
+#+BEGIN_SRC emacs-lisp
+(defun customize-gruvbox ()
+    (custom-theme-set-faces
+    'gruvbox-dark-soft
+    '(org-block-begin-line ((t (:foreground "#796D64" :background "#32302f"))))
+    '(org-block-end-line ((t (:foreground "#796D64" :background "#32302f"))))))
+(customize-gruvbox)
+#+END_SRC
+
+* Emacs behaviour
+
+Do not create backup files
+
+#+BEGIN_SRC emacs-lisp
+(setq-default backup-inhibited t)
+#+END_SRC
+
+Ask for confirmation before killing emacs
+
+#+BEGIN_SRC emacs-lisp
+(setq confirm-kill-emacs (lambda (prompt) (y-or-n-p "Really want to exit? ")))
+#+END_SRC
+
+Start with maximized frame
+
+#+BEGIN_SRC emacs-lisp
+(toggle-frame-maximized)
+#+END_SRC
+
+Do not use --dired option for ls when using macOS
+
+#+BEGIN_SRC emacs-lisp
+(when (string-equal system-type "darwin")
+  (setq dired-use-ls-dired nil))
+#+END_SRC
+
+* Custom commands
+
+Quickly switch to previous buffer
+
+#+BEGIN_SRC emacs-lisp
+(defun switch-to-previous-buffer ()
+  "Switch to previously open buffer. Repeated invocations toggle between the two most recently open buffers."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+#+END_SRC
+
+Open frequently used directories/files in dired
+
+#+BEGIN_SRC emacs-lisp
+(defun open-org-directory ()
+  "Open org directory in dired"
+  (interactive)
+  (dired org-directory))
+
+(defun open-emacs-home ()
+  "Open emacs home in dired"
+  (interactive)
+  (dired user-emacs-directory))
+
+(defun open-emacs-settings ()
+  "Open settings.org"
+  (interactive)
+  (find-file (concat user-emacs-directory "settings.org")))
+#+END_SRC
+
+Quickly switch between light and dark themes
+
+#+BEGIN_SRC emacs-lisp
+(defun switch-light-theme ()
+  (interactive)
+  (load-theme 'gruvbox-light-hard))
+
+(defun switch-dark-theme ()
+  (interactive)
+  (load-theme 'gruvbox-dark-soft)
+  (customize-gruvbox))
+#+END_SRC
+
+Insert a source code block in org mode
+
+#+BEGIN_SRC emacs-lisp
+(defun org-insert-src-block (src-code-type)
+  (interactive "sLanguage: ")
+  (progn
+    (insert (format "#+BEGIN_SRC %s\n" src-code-type))
+    (newline-and-indent)
+    (insert "#+END_SRC")
+    (newline-and-indent)
+    (previous-line 2)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun switch-to-scratch-buffer ()
+  (interactive)
+  (switch-to-buffer "*scratch*"))
+#+END_SRC
+
+* Keybindings
+
+Map meta to cmd on MacOS
+
+#+BEGIN_SRC emacs-lisp
+(cond
+ ((string-equal system-type "darwin")
+  (setq mac-command-modifier 'meta
+	mac-option-modifier 'none
+	default-input-method "MacOSX")))
+#+END_SRC
+
+Use jk instead of ESC in evil mode
+
+#+BEGIN_SRC emacs-lisp
+(key-chord-define evil-insert-state-map "jk" #'evil-normal-state)
+#+END_SRC
+
+Define all global keybindings that start with SPC
+
+#+BEGIN_SRC emacs-lisp
+(general-define-key
+ :states '(normal visual emacs motion)
+ :keymaps 'override
+ :prefix "SPC"
+ "" nil
+ "." '(counsel-find-file :which-key "Find file")
+ "," '(switch-to-previous-buffer :which-key "Switch to previous buffer")
+ "<" '(ivy-switch-buffer :which-key "Show all buffers")
+ "x" '(switch-to-scratch-buffer :which-key "Switch to *scratch* buffer")
+ "d" '(dired :which-key "Open dired")
+ "g" '(magit :which-key "Open magit")
+ "p" '(:keymap projectile-command-map :which-key "Projectile commands")
+ "p a" '(projectile-add-known-project :which-key "Add new project")
+ "b" '(:ignore t :which-key "Buffers")
+ "b k" '(kill-current-buffer :which-key "Kill buffer")
+ "b r" '(revert-buffer :which-key "Revert buffer")
+ "w" '(:ignore t :which-key "Window management")
+ "w v" '(split-window-right :which-key "Split window vertically")
+ "w s" '(split-window-below :which-key "Split window horizontally")
+ "w h" '(evil-window-left :which-key "Move to left window")
+ "w j" '(evil-window-down :which-key "Move to lower window")
+ "w k" '(evil-window-up :which-key "Move to upper window")
+ "w l" '(evil-window-right :which-key "Move to right window")
+ "c" '(:ignore t :which-key "Emacs config")
+ "c h" '(open-emacs-home :which-key "Open emacs.d folder")
+ "c s" '(open-emacs-settings :which-key "Open emacs settings.org")
+ "q" '(save-buffers-kill-terminal :which-key "Quit Emacs"))
+#+END_SRC
+
+Insert code in org mode
+
+#+BEGIN_SRC emacs-lisp
+(general-define-key
+ :prefix "SPC"
+ :states 'normal
+ :keymaps 'org-mode-map
+ "i" '(:ignore t :which-key "Insert")
+ "i c" '(org-insert-src-block :which-key "Insert SRC block"))
+#+END_SRC
+
+Moving around in ivy
+
+#+BEGIN_SRC emacs-lisp
+(general-define-key
+ :keymaps 'ivy-minibuffer-map
+ "C-j" #'ivy-next-line
+ "C-k" #'ivy-previous-line)
+
+(general-define-key
+ :keymaps 'ivy-switch-buffer-map
+ "C-j" #'ivy-next-line
+ "C-k" #'ivy-previous-line)
+#+END_SRC
+

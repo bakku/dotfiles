@@ -33,7 +33,7 @@ Enable ivy/counsel
 Override M-x using the one counsel offers
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "M-x") #'counsel-M-x)
 #+END_SRC
 
 ** Org mode
@@ -68,13 +68,6 @@ Log the time when a task is set to done
 
 #+BEGIN_SRC emacs-lisp
 (setq org-log-done 'time)
-#+END_SRC
-
-Set directories for org
-
-#+BEGIN_SRC emacs-lisp
-(setq org-directory "/Volumes/NO NAME/org")
-(setq org-agenda-files (list "/Volumes/NO NAME/org/todo.org"))
 #+END_SRC
 
 Customize colors of org mode
@@ -272,6 +265,12 @@ Customize gruvbox theme
 
 * Emacs behaviour
 
+Load custom behaviour if present
+
+#+BEGIN_SRC emacs-lisp
+(load (expand-file-name (concat user-emacs-directory "user.el")) t)
+#+END_SRC
+
 Do not create backup files
 
 #+BEGIN_SRC emacs-lisp
@@ -403,6 +402,8 @@ Define all global keybindings that start with SPC
  "w j" '(evil-window-down :which-key "Move to lower window")
  "w k" '(evil-window-up :which-key "Move to upper window")
  "w l" '(evil-window-right :which-key "Move to right window")
+ "w q" '(evil-window-delete :which-key "Delete a window")
+ "w o" '(delete-other-windows :which-key "Delete all other windows")
  "c" '(:ignore t :which-key "Emacs config")
  "c h" '(open-emacs-home :which-key "Open emacs.d folder")
  "c s" '(open-emacs-settings :which-key "Open emacs settings.org")

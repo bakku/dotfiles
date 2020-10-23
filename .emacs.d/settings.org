@@ -170,6 +170,35 @@ Enable doom modeline
 (doom-modeline-mode 1)
 #+END_SRC
 
+** Web Mode
+
+Enable web mode for html files
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+#+END_SRC
+
+** LSP Mode
+
+Enable LSP mode
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'web-mode-hook #'lsp)
+#+END_SRC
+
+Enable which key integration
+
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'lsp-mode
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+#+END_SRC
+
+** Company Mode
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'after-init-hook 'global-company-mode)
+#+END_SRC
+
 * Emacs visual appearance
 
 ** General
@@ -391,6 +420,8 @@ Define all global keybindings that start with SPC
  "d" '(dired :which-key "Open dired")
  "g" '(magit :which-key "Open magit")
  "p" '(:keymap projectile-command-map :which-key "Projectile commands")
+ "c" '(:ignore t :which-key "Code commands")
+ "c l" '(:keymap lsp-command-map :package lsp-mode :which-key "LSP commands")
  "p a" '(projectile-add-known-project :which-key "Add new project")
  "b" '(:ignore t :which-key "Buffers")
  "b k" '(kill-current-buffer :which-key "Kill buffer")
@@ -404,9 +435,9 @@ Define all global keybindings that start with SPC
  "w l" '(evil-window-right :which-key "Move to right window")
  "w q" '(evil-window-delete :which-key "Delete a window")
  "w o" '(delete-other-windows :which-key "Delete all other windows")
- "c" '(:ignore t :which-key "Emacs config")
- "c h" '(open-emacs-home :which-key "Open emacs.d folder")
- "c s" '(open-emacs-settings :which-key "Open emacs settings.org")
+ "f" '(:ignore t :which-key "File operations")
+ "f h" '(open-emacs-home :which-key "Open emacs.d folder")
+ "f c" '(open-emacs-settings :which-key "Open emacs settings.org")
  "q" '(save-buffers-kill-terminal :which-key "Quit Emacs"))
 #+END_SRC
 
@@ -433,5 +464,25 @@ Moving around in ivy
  :keymaps 'ivy-switch-buffer-map
  "C-j" #'ivy-next-line
  "C-k" #'ivy-previous-line)
+#+END_SRC
+
+Completion keybinding
+
+#+BEGIN_SRC emacs-lisp
+(general-define-key
+ :states 'insert
+ "C-SPC" '(company-complete :which-key "Search for completions"))
+#+END_SRC
+
+Web mode keybindings
+
+#+BEGIN_SRC emacs-lisp
+(general-define-key
+ :prefix "SPC"
+ :states 'normal
+ :keymaps 'web-mode-map
+ "c j" '(web-mode-navigate :which-key "Jump to opening / closing block")
+ "c f" '(web-mode-fold-or-unfold :which-key "Fold or unfold")
+ "c ;" '(web-mode-comment-or-uncomment :which-key "Comment or uncomment"))
 #+END_SRC
 

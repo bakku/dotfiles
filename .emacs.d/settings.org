@@ -304,6 +304,7 @@ Do not create backup files
 
 #+BEGIN_SRC emacs-lisp
 (setq-default backup-inhibited t)
+(setq create-lockfiles nil)
 #+END_SRC
 
 Ask for confirmation before killing emacs
@@ -323,6 +324,13 @@ Do not use --dired option for ls when using macOS
 #+BEGIN_SRC emacs-lisp
 (when (string-equal system-type "darwin")
   (setq dired-use-ls-dired nil))
+#+END_SRC
+
+In case two dired windows are open, try to automatically use the path of the other
+window when moving or copying files.
+
+#+BEGIN_SRC emacs-lisp
+(setq dired-dwim-target t)
 #+END_SRC
 
 * Custom commands
@@ -471,7 +479,11 @@ Completion keybinding
 #+BEGIN_SRC emacs-lisp
 (general-define-key
  :states 'insert
- "C-SPC" '(company-complete :which-key "Search for completions"))
+ "C-SPC" '(company-complete :which-key "Search for completions")
+ "C-n" #'company-select-next
+ "C-p" #'company-select-previous
+ "C-j" #'company-select-next
+ "C-k" #'company-select-previous)
 #+END_SRC
 
 Web mode keybindings
@@ -486,3 +498,16 @@ Web mode keybindings
  "c ;" '(web-mode-comment-or-uncomment :which-key "Comment or uncomment"))
 #+END_SRC
 
+Clojure mode keybindings
+
+#+BEGIN_SRC emacs-lisp
+(general-define-key
+ :prefix "SPC"
+ :states 'normal
+ :keymaps 'clojure-mode-map
+ "c a" '(clojure-align :which-key "Vertical align")
+ "c t" '(clojure-thread :which-key "Thread a form")
+ "c u" '(clojure-unwind :which-key "Unwind a form")
+ "c p" '(clojure-cycle-privacy :which-key "Toggle privacy of def/defn")
+ "c r" '(clojure-rename-ns-alias :which-key "Rename alias"))
+#+END_SRC

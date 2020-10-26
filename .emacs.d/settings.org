@@ -147,10 +147,18 @@ Display errors a little quicker
 (setq flycheck-display-errors-delay 0.25)
 #+END_SRC
 
-Enable clj-kondo and add homebrew location to path in case clj-kondo can't be found by flycheck
+Enable/Disable checkers
 
 #+BEGIN_SRC emacs-lisp
 (require 'flycheck-clj-kondo)
+(setq-default flycheck-disabled-checkers '(ruby-reek scss-lint))
+#+END_SRC
+
+Use a tooltip to show flycheck errors
+
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'flycheck
+  (flycheck-pos-tip-mode))
 #+END_SRC
 
 ** Exec path from shell
@@ -172,10 +180,44 @@ Enable doom modeline
 
 ** Web Mode
 
-Enable web mode for html files
+Enable web mode for different html file types
 
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html.*\\'" . web-mode))
+#+END_SRC
+
+Set indent for web mode
+
+#+BEGIN_SRC emacs-lisp
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-css-indent-offset 4)
+(setq web-mode-code-indent-offset 2)
+#+END_SRC
+
+** JS2
+
+Enable JS2 mode
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+#+END_SRC
+
+Use 2 spaces as indent
+
+#+BEGIN_SRC emacs-lisp
+(setq js-indent-level 2)
+#+END_SRC
+
+** RSJX mode
+
+Work around to use flycheck in combination with web mode
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'rjsx-mode-hook
+  (lambda ()
+    (add-node-modules-path)
+    (flycheck-add-mode 'javascript-eslint 'rsjx-mode)
+    (flycheck-select-checker 'javascript-eslint)))
 #+END_SRC
 
 ** LSP Mode
@@ -183,7 +225,8 @@ Enable web mode for html files
 Enable LSP mode
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'web-mode-hook #'lsp)
+(add-hook 'ruby-mode-hook #'lsp)
+(add-hook 'rjsx-mode-hook #'lsp)
 #+END_SRC
 
 Enable which key integration
@@ -197,6 +240,14 @@ Enable which key integration
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'after-init-hook 'global-company-mode)
+#+END_SRC
+
+** NeoTree
+
+Use icon theme
+
+#+BEGIN_SRC emacs-lisp
+(setq neo-theme 'icons)
 #+END_SRC
 
 * Emacs visual appearance
@@ -333,6 +384,12 @@ window when moving or copying files.
 (setq dired-dwim-target t)
 #+END_SRC
 
+Always use spaces
+
+#+BEGIN_SRC emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+END_SRC
+
 * Custom commands
 
 Quickly switch to previous buffer
@@ -427,6 +484,7 @@ Define all global keybindings that start with SPC
  "x" '(switch-to-scratch-buffer :which-key "Switch to *scratch* buffer")
  "d" '(dired :which-key "Open dired")
  "g" '(magit :which-key "Open magit")
+ "t" '(neotree-toggle :which-key "Toggle neotree")
  "p" '(:keymap projectile-command-map :which-key "Projectile commands")
  "c" '(:ignore t :which-key "Code commands")
  "c l" '(:keymap lsp-command-map :package lsp-mode :which-key "LSP commands")
@@ -511,3 +569,16 @@ Clojure mode keybindings
  "c p" '(clojure-cycle-privacy :which-key "Toggle privacy of def/defn")
  "c r" '(clojure-rename-ns-alias :which-key "Rename alias"))
 #+END_SRC
+
+Set neotree keybindings
+
+#+BEGIN_SRC emacs-lisp
+(general-define-key
+ :states 'normal
+ :keymaps 'neotree-mode-map
+ "RET" 'neotree-enter
+ "q" 'neotree-hide
+ "A" 'neotree-stretch-toggle
+ "H" 'neotree-hidden-file-toggle)
+#+END_SRC
+

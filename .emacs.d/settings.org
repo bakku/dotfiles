@@ -36,6 +36,12 @@ Override M-x using the one counsel offers
 (global-set-key (kbd "M-x") #'counsel-M-x)
 #+END_SRC
 
+Get some helpful information in ivy menus
+
+#+BEGIN_SRC emacs-lisp
+(ivy-rich-mode 1)
+#+END_SRC
+
 ** Org mode
 
 Beautify bullets
@@ -55,7 +61,6 @@ Always use org-indent-mode
 #+BEGIN_SRC emacs-lisp
 (setq org-startup-indented t)
 #+END_SRC
-
 
 Customize todo keyword sequences
 
@@ -236,6 +241,12 @@ Enable which key integration
   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 #+END_SRC
 
+Do not use lsp diagnostics
+
+#+BEGIN_SRC emacs-lisp
+(setq lsp-diagnostic-package :none)
+#+END_SRC
+
 ** Company Mode
 
 #+BEGIN_SRC emacs-lisp
@@ -248,6 +259,20 @@ Use icon theme
 
 #+BEGIN_SRC emacs-lisp
 (setq neo-theme 'icons)
+#+END_SRC
+
+** YAML mode
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+#+END_SRC
+
+** Ruby mode
+
+Do not insert a magic comment
+
+#+BEGIN_SRC emacs-lisp
+(setq ruby-insert-encoding-magic-comment nil)
 #+END_SRC
 
 * Emacs visual appearance
@@ -480,13 +505,14 @@ Define all global keybindings that start with SPC
  "" nil
  "." '(counsel-find-file :which-key "Find file")
  "," '(switch-to-previous-buffer :which-key "Switch to previous buffer")
- "<" '(ivy-switch-buffer :which-key "Show all buffers")
+ "<" '(counsel-switch-buffer :which-key "Show all buffers")
  "x" '(switch-to-scratch-buffer :which-key "Switch to *scratch* buffer")
  "d" '(dired :which-key "Open dired")
  "g" '(magit :which-key "Open magit")
  "t" '(neotree-toggle :which-key "Toggle neotree")
  "p" '(:keymap projectile-command-map :which-key "Projectile commands")
  "c" '(:ignore t :which-key "Code commands")
+ "s" '(swiper :which-key "Swiper")
  "c l" '(:keymap lsp-command-map :package lsp-mode :which-key "LSP commands")
  "p a" '(projectile-add-known-project :which-key "Add new project")
  "b" '(:ignore t :which-key "Buffers")
@@ -529,7 +555,8 @@ Moving around in ivy
 (general-define-key
  :keymaps 'ivy-switch-buffer-map
  "C-j" #'ivy-next-line
- "C-k" #'ivy-previous-line)
+ "C-k" #'ivy-previous-line
+ "C-d" #'ivy-switch-buffer-kill)
 #+END_SRC
 
 Completion keybinding

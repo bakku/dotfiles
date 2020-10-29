@@ -10,6 +10,12 @@ Evil collection wants this configuration to work properly
 (setq evil-want-keybinding nil)
 #+END_SRC
 
+Respect visual line mode. Needs to be set before loading evil
+
+#+BEGIN_SRC emacs-lisp
+(setq evil-respect-visual-line-mode t)
+#+END_SRC
+
 Enable evil mode
 
 #+BEGIN_SRC emacs-lisp
@@ -44,10 +50,24 @@ Get some helpful information in ivy menus
 
 ** Org mode
 
-Beautify bullets
+Function to setup visual fill mode
 
 #+BEGIN_SRC emacs-lisp
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(defun org-setup-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+#+END_SRC
+
+Beautify bullets, hide line numbers, wrap long lines automatically, and setup visual fill mode
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook
+  (lambda ()
+    (org-bullets-mode 1)
+    (display-line-numbers-mode -1)
+    (visual-line-mode)
+    (org-setup-visual-fill)))
 #+END_SRC
 
 Do not show // or ** for italic and bold
@@ -609,3 +629,5 @@ Set neotree keybindings
  "H" 'neotree-hidden-file-toggle)
 #+END_SRC
 
+
+a a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a aa a a a a a a a a a

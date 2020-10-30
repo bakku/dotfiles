@@ -252,6 +252,7 @@ Enable LSP mode
 #+BEGIN_SRC emacs-lisp
 (add-hook 'ruby-mode-hook #'lsp)
 (add-hook 'rjsx-mode-hook #'lsp)
+(add-hook 'go-mode-hook #'lsp)
 #+END_SRC
 
 Enable which key integration

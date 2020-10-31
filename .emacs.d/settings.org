@@ -296,6 +296,16 @@ Do not insert a magic comment
 (setq ruby-insert-encoding-magic-comment nil)
 #+END_SRC
 
+** Go mode
+
+#+BEGIN_SRC emacs-lisp
+(setq gofmt-command "goimports")
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'before-save-hook 'gofmt-before-save)
+#+END_SRC
+
 * Emacs visual appearance
 
 ** General

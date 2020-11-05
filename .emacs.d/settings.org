@@ -298,9 +298,13 @@ Do not insert a magic comment
 
 ** Go mode
 
+Change gofmt command to goimports
+
 #+BEGIN_SRC emacs-lisp
 (setq gofmt-command "goimports")
 #+END_SRC
+
+Execute gofmt before saving
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'before-save-hook 'gofmt-before-save)

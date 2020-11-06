@@ -59,7 +59,30 @@ Function to setup visual fill mode
   (visual-fill-column-mode 1))
 #+END_SRC
 
-Beautify bullets, hide line numbers, wrap long lines automatically, and setup visual fill mode
+Change font in org mode
+
+#+BEGIN_SRC emacs-lisp
+(defun org-font-setup ()
+  (when (member "Cantarell" (font-family-list))
+    (dolist (face '((org-level-1 . 1.2)
+                    (org-level-2 . 1.1)
+                    (org-level-3 . 1.05)))
+      (set-face-attribute (car face) nil :family "Cantarell" :height (cdr face)))
+    (setq buffer-face-mode-face '(:family "Cantarell" :height 180))
+    (buffer-face-mode))
+  (when (string-equal system-type "darwin")
+    (set-face-attribute 'org-block nil :font "Monaco-16"))
+  (when (string-equal system-type "windows-nt")
+    (set-face-attribute 'org-block nil :font "Cascadia Code-14")))
+#+END_SRC
+
+Do the following:
+
+- Beautify bullets
+- Hide line numbers
+- Wrap long lines automatically
+- Setup visual fill mode
+- Set up customized font for org mode
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'org-mode-hook
@@ -67,7 +90,8 @@ Beautify bullets, hide line numbers, wrap long lines automatically, and setup vi
     (org-bullets-mode 1)
     (display-line-numbers-mode -1)
     (visual-line-mode)
-    (org-setup-visual-fill)))
+    (org-setup-visual-fill)
+    (org-font-setup)))
 #+END_SRC
 
 Do not show // or ** for italic and bold
@@ -100,10 +124,10 @@ Customize colors of org mode
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keyword-faces
         '(("PLANNED" . (:foreground "dark gray" :weight bold))
-        ("OPEN" . (:foreground "turquoise" :weight bold))
-        ("IN PROGRESS" . (:foreground "LightPink1" :weight bold))
-        ("IN REVIEW" . (:foreground "IndianRed1" :weight bold))
-        ("DONE" . (:foreground "DarkOliveGreen1" :weight bold))))
+          ("OPEN" . (:foreground "turquoise" :weight bold))
+          ("IN PROGRESS" . (:foreground "LightPink1" :weight bold))
+          ("IN REVIEW" . (:foreground "IndianRed1" :weight bold))
+          ("DONE" . (:foreground "DarkOliveGreen1" :weight bold))))
 #+END_SRC
 
 ** Which key

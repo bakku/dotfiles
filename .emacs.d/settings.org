@@ -50,6 +50,12 @@ Get some helpful information in ivy menus
 
 ** Org mode
 
+Open org files with all headlines folded
+
+#+BEGIN_SRC emacs-lisp
+(setq org-startup-folded t)
+#+END_SRC
+
 Function to setup visual fill mode
 
 #+BEGIN_SRC emacs-lisp
@@ -128,6 +134,20 @@ Customize colors of org mode
           ("IN PROGRESS" . (:foreground "LightPink1" :weight bold))
           ("IN REVIEW" . (:foreground "IndianRed1" :weight bold))
           ("DONE" . (:foreground "DarkOliveGreen1" :weight bold))))
+#+END_SRC
+
+Configure org mode to be able to use bibtex
+
+#+BEGIN_SRC emacs-lisp
+(require 'ox-bibtex)
+(setq org-latex-pdf-process '("latexmk -xelatex -shell-escape -outdir=%o %f"))
+#+END_SRC
+
+Use lstlisting for code
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-listings 'minted)
 #+END_SRC
 
 ** Which key

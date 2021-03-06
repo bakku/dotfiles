@@ -150,6 +150,12 @@ Use lstlisting for code
 (setq org-latex-listings 'minted)
 #+END_SRC
 
+Always put captions below figures/tables/etc
+
+#+BEGIN_SRC emacs-lisp
+(setq org-latex-caption-above nil)
+#+END_SRC
+
 ** Which key
 
 Get all possible combinations when pressing a prefix key

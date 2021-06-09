@@ -360,6 +360,14 @@ Execute gofmt before saving
 (add-hook 'before-save-hook 'gofmt-before-save)
 #+END_SRC
 
+** YASnippet
+
+Enable YASnippet
+
+#+BEGIN_SRC emacs-lisp
+(yas-global-mode 1)
+#+END_SRC
+
 * Emacs visual appearance
 
 ** General

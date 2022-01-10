@@ -112,12 +112,19 @@ Always use org-indent-mode
 (setq org-startup-indented t)
 #+END_SRC
 
+Do not try to mess around with source indentation
+
+#+BEGIN_SRC emacs-lisp
+(setq org-src-preserve-indentation t)
+#+END_SRC
+
 Customize todo keyword sequences
 
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keywords
-        '((sequence "PLANNED" "OPEN" "IN PROGRESS" "IN REVIEW" "DONE")))
+        '((sequence "PLANNED" "OPEN" "IN PROGRESS" "ON HOLD" "IN REVIEW" "DONE")))
 #+END_SRC
+
 
 Log the time when a task is set to done
 
@@ -295,6 +302,12 @@ Work around to use flycheck in combination with web mode
     (flycheck-select-checker 'javascript-eslint)))
 #+END_SRC
 
+** Typescript mode
+
+#+BEGIN_SRC emacs-lisp
+(setq typescript-indent-level 2)
+#+END_SRC
+
 ** LSP Mode
 
 Enable LSP mode
@@ -303,6 +316,8 @@ Enable LSP mode
 (add-hook 'ruby-mode-hook #'lsp)
 (add-hook 'rjsx-mode-hook #'lsp)
 (add-hook 'go-mode-hook #'lsp)
+(add-hook 'typescript-mode-hook #'lsp)
+(add-hook 'java-mode-hook #'lsp)
 #+END_SRC
 
 Enable which key integration
@@ -366,6 +381,12 @@ Enable YASnippet
 
 #+BEGIN_SRC emacs-lisp
 (yas-global-mode 1)
+#+END_SRC
+
+** CC mode
+
+#+BEGIN_SRC emacs-lisp
+(setq-default c-basic-offset 4)
 #+END_SRC
 
 * Emacs visual appearance
@@ -700,4 +721,12 @@ Set neotree keybindings
  "q" 'neotree-hide
  "A" 'neotree-stretch-toggle
  "H" 'neotree-hidden-file-toggle)
+#+END_SRC
+
+Set evil-nerd-commenter keybinding
+
+#+BEGIN_SRC emacs-lisp
+(general-define-key
+ :states '(normal insert visual emacs motion)
+ "M-;" 'evilnc-comment-or-uncomment-lines)
 #+END_SRC

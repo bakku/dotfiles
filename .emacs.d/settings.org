@@ -16,6 +16,12 @@ Respect visual line mode. Needs to be set before loading evil
 (setq evil-respect-visual-line-mode t)
 #+END_SRC
 
+Support redo functionality with evil
+
+#+BEGIN_SRC emacs-lisp
+(setq evil-undo-system 'undo-redo)
+#+END_SRC
+
 Enable evil mode
 
 #+BEGIN_SRC emacs-lisp
@@ -26,6 +32,12 @@ Evil mode in more places
 
 #+BEGIN_SRC emacs-lisp
 (evil-collection-init)
+#+END_SRC
+
+Evil matchit (to jump between e.g. do/end in ruby with '%')
+
+#+BEGIN_SRC emacs-lisp
+(global-evil-matchit-mode 1)
 #+END_SRC
 
 ** Ivy/Counsel
@@ -290,18 +302,6 @@ Use 2 spaces as indent
 (setq js-indent-level 2)
 #+END_SRC
 
-** RSJX mode
-
-Work around to use flycheck in combination with web mode
-
-#+BEGIN_SRC emacs-lisp
-(add-hook 'rjsx-mode-hook
-  (lambda ()
-    (add-node-modules-path)
-    (flycheck-add-mode 'javascript-eslint 'rsjx-mode)
-    (flycheck-select-checker 'javascript-eslint)))
-#+END_SRC
-
 ** Typescript mode
 
 #+BEGIN_SRC emacs-lisp
@@ -314,10 +314,7 @@ Enable LSP mode
 
 #+BEGIN_SRC emacs-lisp
 (add-hook 'ruby-mode-hook #'lsp)
-(add-hook 'rjsx-mode-hook #'lsp)
 (add-hook 'go-mode-hook #'lsp)
-(add-hook 'typescript-mode-hook #'lsp)
-(add-hook 'java-mode-hook #'lsp)
 #+END_SRC
 
 Enable which key integration
@@ -628,6 +625,10 @@ Define all global keybindings that start with SPC
  "c" '(:ignore t :which-key "Code commands")
  "s" '(swiper :which-key "Swiper")
  "c l" '(:keymap lsp-command-map :package lsp-mode :which-key "LSP commands")
+ "c d" '(lsp-find-definition :which-key "LSP find definition")
+ "c r" '(lsp-find-references :which-key "LSP find references")
+ "c f" '(yafolding-hide-element :which-key "Fold block")
+ "c u" '(yafolding-show-element :which-key "Unfold block")
  "p a" '(projectile-add-known-project :which-key "Add new project")
  "b" '(:ignore t :which-key "Buffers")
  "b k" '(kill-current-buffer :which-key "Kill buffer")

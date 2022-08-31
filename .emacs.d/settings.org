@@ -380,6 +380,15 @@ Enable YASnippet
 (yas-global-mode 1)
 #+END_SRC
 
+** yafolding
+
+Allows folding/unfolding of code blocks
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'prog-mode-hook
+          (lambda () (yafolding-mode)))
+#+END_SRC
+
 ** CC mode
 
 #+BEGIN_SRC emacs-lisp
